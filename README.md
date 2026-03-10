@@ -1,6 +1,6 @@
 # GrooD - GradientBoostedDeconvolution
 
-![GrooD deconvolution schematic including pseudobulk simulation, model training and cell type proportion inference on bulk data](assets/GrooD_scheme.png "Illustration of GrooD training and inference")
+![GrooD deconvolution schematic including pseudobulk simulation, model training and cell type proportion inference on bulk data](assets/GrooD_scheme.png)
 
 ## Principle
 
