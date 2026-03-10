@@ -1,5 +1,6 @@
 # GrooD - GradientBoostedDeconvolution
 
+![GrooD deconvolution schematic including pseudobulk simulation, model training and cell type proportion inference on bulk data](assets/GrooD_scheme.png "Illustration of GrooD training and inference")
 
 ## Principle
 
@@ -19,23 +20,21 @@ In contrast to most other regression models, which extract marker genes from sin
 
 ## GrooD implementations
 
-In the current tool, users can choose from three GrooD implementations, each with its specific advantages. Multi-threading is recommended for use across implementations, but especially recommended for **GrooD**.
+In the current tool, users can choose from three GrooD implementations, each with its specific advantages. Multi-threading is recommended for use across implementations, but especially recommended for **GrooD**. Notably, only GrooD has been extensively tested so far, while **XGrooD** and **MultiGrooD** are still experimental.
 
 ### GrooD
 
-The standard implementation of **GrooD** uses the ```scikit-learn``` implementation of ```GradientBoostingRegressor``` wrapped in a ```MultiOutputRegressor```, where each Regressor predicts the proportions of a single cell type. The model is comparably slow but convinces by rather accurate predictions, while less prone to overfitting. Optimal parameters are **XXX**.
+The standard implementation of **GrooD** uses the ```scikit-learn``` implementation of ```GradientBoostingRegressor``` wrapped in a ```MultiOutputRegressor```, where each Regressor predicts the proportions of a single cell type. The model is comparably slow but convinces by rather accurate predictions. Optimal parameters are given by default.
 This implementation can be used setting ```--grood_mode grood```.
 
 ### XGrooD
 
 **XGrooD** is designed and functionally very similar to GrooD but makes use of the ```XGBoost``` implementation of ```XGBRegressor``` wrapped in a ```MultiOutputRegressor```, where each Regressor predicts the proportions of a single cell type. Due to hist boosting this model is comparably fast.
-Optimal parameters are **XXX**.
 This implementation can be used setting ```--grood_mode xgrood```.
 
 ### MultiGrooD
 
 Different to GrooD and XGrooD, **MultiGrooD** employs a custom gradient boosting model from ```XGBoost``` that uses a multi target prediction strategy. Basically, each leave of a single tree predicts the proportion of a single cell type. Thereby, the booster learns the predictions of cell type proportions in relation to each other and is further constraint to a maximum prediction of 1 across cell types per sample.
-Optimal parameters are **XXX**.
 This implementation can be used setting ```--grood_mode multigrood```.
 
 
@@ -62,6 +61,23 @@ The pseudobulk simulation strategy is adapted from **TAPE** (https://github.com/
 - condition-specific simulation (```condition```): accounts for (a specified or) condition factor such as batch origin or disease state during simulation and only samples cells from the same conditions to simulate a single pseudobulk
 - individual-specific simulation (```individual```): accounts for origin of cells from distinct individuals and only simulates pseudobulks with cells from dstinct individuals
 
+## Installation
+
+Install with files from the ```env```directory. We provide a starting point for mamba/conda as well as pip environments.
+
+Mamba environment (conda analog)
+```bash
+mamba create -f GrooD.yml
+mamba activate GrooD
+```
+
+Pip environment
+```bash
+python -m venv GrooD
+source GrooD/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
 ## Input
 
@@ -180,34 +196,16 @@ python grood.py --sc /path/to/scData --bulk /path/to/bulkData --props /path/to/p
     --threads 16
 ```
 
-
-## Installation
-
-Install with files from the ```env```directory. We provide a starting point for mamba/conda as well as pip environments.
-
-Mamba environment (conda analog)
-```bash
-mamba create -f GrooD.yml
-mamba activate GrooD
-```
-
-Pip environment
-```bash
-python -m venv GrooD
-source GrooD/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-
 ## Acknowledgements
 
 We thank valuable contributions from previous studies:
-- pseudobulk simulator from Chen et al., 2022 ()
-- 
+- pseudobulk simulator from Chen et al., 2022 (https://github.com/poseidonchan/TAPE)
 
 Further useful repositories:
-- the command line application of the pseudobulk simulator used to generate pseudobulks for testing: 
-- the deconvolution benchmarking pipeline used for results in ```grood_runs```: 
-- the convolution benchmarking tool for results in ```analysis/Convolution```:
-- the Nextflow pipeline used to process raw bulk RNA-seq data: 
+- the command line application of the pseudobulk simulator used to generate pseudobulks for testing: https://github.com/MaikTungsten/PseudobulkSimulators
+- the deconvolution benchmarking pipeline used for results in ```grood_runs```: https://github.com/MaikTungsten/Deconvolution_benchmarking
+- the Nextflow pipeline used to process raw bulk RNA-seq data: https://github.com/MaikTungsten/RNAseq_pipeline
+
+GrooD has been developed within a collaboration between Boehringer Ingelheim and Tübingen University funded through the joint AI & Data Science Fellowship program. GrooD is currently available as a preprint on bioRxiv:
+
+> Wolfram-Schauerte et al., Gradient boosting regression and convolution improve deconvolution of bulk transcriptomes., bioRxiv, 2026, https://doi.org/10.64898/2026.03.03.709368.
