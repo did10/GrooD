@@ -10,10 +10,10 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 
-from bin.tools import create_pred_dir, create_inference_dir
-from bin.deconvolution import train_eval_GrooD, train_eval_XGrooD, train_eval_MultiGrooD, eval_inference, inference_grood_models, inference_loaded_grood
-from bin.preprocessing import load_train_test_data, load_inference_data, load_all_data
-from bin.evaluation import visualize_predict, get_explain_heatmap
+from src.tools import create_pred_dir, create_inference_dir
+from src.deconvolution import train_eval_GrooD, train_eval_XGrooD, train_eval_MultiGrooD, eval_inference, inference_grood_models, inference_loaded_grood
+from src.preprocessing import load_train_test_data, load_inference_data, load_all_data
+from src.evaluation import visualize_predict, get_explain_heatmap
 
 # Set up argparser
 

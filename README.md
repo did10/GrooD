@@ -74,7 +74,7 @@ mamba activate GrooD
 Pip environment
 ```bash
 python -m venv GrooD
-source GrooD/bin/activate
+source GrooD/src/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```

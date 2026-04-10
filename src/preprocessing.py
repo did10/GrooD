@@ -11,8 +11,8 @@ from sklearn.inspection import permutation_importance
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.utils.fixes import parse_version
-from bin.simulation import simulator
-from bin.tools import create_pseudobulk_dir, main_gene_selection, bulk_norm, remove_zero_variance
+from src.simulation import simulator
+from src.tools import create_pseudobulk_dir, main_gene_selection, bulk_norm, remove_zero_variance
 from pathlib import Path
 
 
